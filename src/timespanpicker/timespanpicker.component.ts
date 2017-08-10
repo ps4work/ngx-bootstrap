@@ -14,7 +14,7 @@ import { TimespanpickerActions } from './reducer/timespanpicker.actions';
 import { TimespanpickerStore } from './reducer/timespanpicker.store';
 import { getControlsValue } from './timespanpicker-controls.util';
 import { TimespanpickerConfig } from './timespanpicker.config';
-import { TimeChangeSource, TimespanpickerComponentState, TimespanpickerControls } from './timespanpicker.models';
+import { TimeChangeSource, TimespanpickerComponentState, TimespanpickerControls, Timespan } from './timespanpicker.models';
 import { isValidDate, padNumber, parseTime, isInputValid } from './timespanpicker.utils';
 
 export const TIMESPANPICKER_CONTROL_VALUE_ACCESSOR: any = {
@@ -240,14 +240,6 @@ export class TimespanpickerComponent implements ControlValueAccessor, Timespanpi
         this._store.dispatch(this._timespanpickerActions.updateControls(getControlsValue(this)));
       });
     _store
-      .select((state) => state.day)
-      .subscribe((value) => {
-        this._renderDays(value);
-
-        this._store.dispatch(this._timespanpickerActions.updateControls(getControlsValue(this)));
-      });
-
-    _store
       .select((state) => state.controls)
       .subscribe((controlsState) => {
         this.isValid.emit(isInputValid(this.days, this.hours, this.minutes, this.seconds, this.isPM()));
@@ -319,9 +311,9 @@ export class TimespanpickerComponent implements ControlValueAccessor, Timespanpi
     }
     this._store.dispatch(this._timespanpickerActions
       .setTime({
-        day: this.days,
-        hour: this.hours,
-        minute: this.minutes,
+        days: this.days,
+        hours: this.hours,
+        minutes: this.minutes,
         seconds: this.seconds
       }));
   }
@@ -363,33 +355,12 @@ export class TimespanpickerComponent implements ControlValueAccessor, Timespanpi
     console.log('renderDays');
     this.days = days;
   }
-  private _renderTime(value: string | Date): void {
+  private _renderTime(value: Timespan): void {
     console.log('renderTime');
-    if (!isValidDate(value)) {
-      this.days = '';
-      this.hours = '';
-      this.minutes = '';
-      this.seconds = '';
-      this.meridian = this.meridians[0];
-
-      return;
-    }
-
-    const _value = parseTime(value);
-    const _hoursPerDayHalf = 12;
-    let _hours = _value.getHours();
-
-    if (this.showMeridian) {
-      this.meridian = this.meridians[_hours >= _hoursPerDayHalf ? 1 : 0];
-      _hours = _hours % _hoursPerDayHalf;
-      // should be 12 PM, not 00 PM
-      if (_hours === 0) {
-        _hours = _hoursPerDayHalf;
-      }
-    }
-
-    this.hours = padNumber(_hours);
-    this.minutes = padNumber(_value.getMinutes());
-    this.seconds = padNumber(_value.getUTCSeconds());
+    console.log(value);
+    this.days = value.days.toString();
+    this.hours = padNumber(+value.hours);
+    this.minutes = padNumber(+value.minutes);
+    this.seconds = padNumber(+value.seconds);
   }
 }

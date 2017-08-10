@@ -78,64 +78,42 @@ export function parseTime(value: string | Date): Date {
   return value;
 }
 
-export function changeTime(value: Date, diff: Timespan): Date {
+export function changeTime(value: Timespan, diff: Timespan): Timespan {
   if (!value) {
-    return changeTime(createDate(new Date(),0,0, 0), diff);
+    return changeTime({days: 0, hours: 0, minutes: 0, seconds: 0}, diff);
   }
 
-  let hour = value.getHours();
-  let minutes = value.getMinutes();
-  let seconds = value.getSeconds();
+  let day = toNumber(value.days);
+  let hour = toNumber(value.hours);
+  let minutes = toNumber(value.minutes);
+  let seconds = toNumber(value.seconds);
 
-  if (diff.hour) {
-    hour = (hour + toNumber(diff.hour)) % hoursPerDay;
+  if (diff.days) {
+    day = (day + toNumber(diff.days));
+  }
+
+  if (diff.hours) {
+    hour = (hour + toNumber(diff.hours));
     if (hour < 0) {
-      hour += hoursPerDay;
+      hour = 0;
     }
   }
 
-  if (diff.minute) {
-    minutes = (minutes + toNumber(diff.minute));
+  if (diff.minutes) {
+    minutes = (minutes + toNumber(diff.minutes));
+    if (minutes < 0) {
+      minutes = 0;
+    }
   }
 
   if (diff.seconds) {
     seconds = (seconds + toNumber(diff.seconds));
-  }
-
-  return createDate(value, hour, minutes, seconds);
-}
-
-export function setTime(value: Date, opts: Timespan): Date {
-  let hour = parseHours(opts.hour);
-  const minute = parseMinutes(opts.minute);
-  const seconds = parseSeconds(opts.seconds) || 0;
-
-  if (opts.isPM) {
-    hour += hoursPerDayHalf;
-  }
-
-  // fixme: unreachable code, value is mandatory
-  if (!value) {
-    if (!isNaN(hour) && !isNaN(minute)) {
-      return createDate(new Date(), hour, minute, seconds);
+    if (seconds < 0) {
+      seconds = 0;
     }
-
-    return value;
   }
 
-  if (isNaN(hour) || isNaN(minute)) {
-    return value;
-  }
-
-  return createDate(value, hour, minute, seconds);
-}
-
-export function createDate(value: Date, hours: number, minutes: number, seconds: number): Date {
-
-  // fixme: unreachable code, value is mandatory
-  const _value = value || new Date();
-  return new Date(_value.getFullYear(), _value.getMonth(), _value.getDate(),
-    hours, minutes, seconds, _value.getMilliseconds());
+  return {days: day, hours: hour, minutes: minutes, seconds: seconds};
 }
 
 export function padNumber(value: number): string {

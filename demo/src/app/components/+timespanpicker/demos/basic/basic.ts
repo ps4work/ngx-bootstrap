@@ -5,5 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: './basic.html'
 })
 export class DemoTimespanpickerBasicComponent {
-  public mytime: Date = new Date();
+  public mytime;
+  public get showtime() {
+    return this.mytime ? JSON.stringify(this.mytime) : 'empty';
+  }
+
 }

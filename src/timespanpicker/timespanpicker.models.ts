@@ -1,9 +1,8 @@
 export interface Timespan {
-  day?: string | number;
-  hour?: string | number;
-  minute?: string | number;
+  days?: string | number;
+  hours?: string | number;
+  minutes?: string | number;
   seconds?: string | number;
-  isPM?: boolean;
 }
 
 export interface TimespanpickerControls {

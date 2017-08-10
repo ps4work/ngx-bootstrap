@@ -1,5 +1,5 @@
 import { changeTime } from './timespanpicker.utils';
-import { TimespanChangeEvent, TimespanpickerComponentState, TimespanpickerControls } from './timespanpicker.models';
+import { TimespanChangeEvent, TimespanpickerComponentState, TimespanpickerControls, Timespan } from './timespanpicker.models';
 
 export function canChangeValue(state: TimespanpickerComponentState, event?: TimespanChangeEvent): boolean {
   if (state.readonlyInput) {
@@ -94,7 +94,7 @@ export function getControlsValue(state: TimespanpickerComponentState): Timespanp
   };
 }
 
-export function timespanpickerControls(value: Date, state: TimespanpickerComponentState): TimespanpickerControls {
+export function timespanpickerControls(value: Timespan, state: TimespanpickerComponentState): TimespanpickerControls {
   const {min, max, hourStep, minuteStep, secondsStep, showSeconds} = state;
   const res = {
     canIncrementDays: true,
@@ -114,11 +114,11 @@ export function timespanpickerControls(value: Date, state: TimespanpickerCompone
 
 // compare dates
   if (max) {
-    const _newHour = changeTime(value, { hour:  hourStep });
+    const _newHour = changeTime(value, { hours:  hourStep });
     res.canIncrementHours = max > _newHour;
 
     if (!res.canIncrementHours) {
-      const _newMinutes = changeTime(value, { minute: minuteStep });
+      const _newMinutes = changeTime(value, { minutes: minuteStep });
       res.canIncrementMinutes =  showSeconds ? max > _newMinutes : max >= _newMinutes ;
     }
 
@@ -129,11 +129,11 @@ export function timespanpickerControls(value: Date, state: TimespanpickerCompone
   }
 
   if (min) {
-    const _newHour = changeTime(value, { hour:  -hourStep });
+    const _newHour = changeTime(value, { hours:  -hourStep });
     res.canDecrementHours = min < _newHour;
 
     if (!res.canDecrementHours) {
-      const _newMinutes = changeTime(value, { minute: -minuteStep });
+      const _newMinutes = changeTime(value, { minutes: -minuteStep });
       res.canDecrementMinutes = showSeconds ? min < _newMinutes : min <= _newMinutes;
     }
 
