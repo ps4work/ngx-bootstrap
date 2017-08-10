@@ -14,6 +14,7 @@ import { RatingModule } from './rating/rating.module';
 import { SortableModule } from './sortable';
 import { TabsModule } from './tabs/tabs.module';
 import { TimepickerModule } from './timepicker/timepicker.module';
+import { TimespanpickerModule } from './timespanpicker/timespanpicker.module';
 import { TooltipModule } from './tooltip/tooltip.module';
 import { TypeaheadModule } from './typeahead/typeahead.module';
 import { PopoverModule } from './popover/popover.module';
@@ -76,6 +77,10 @@ export {
 } from './timepicker';
 
 export {
+  TimespanpickerComponent, TimespanpickerConfig, TimespanpickerModule
+} from './timespanpicker';
+
+export {
   TooltipConfig, TooltipContainerComponent, TooltipDirective, TooltipModule
 } from './tooltip';
 
@@ -103,7 +108,7 @@ const MODULES = [
   CarouselModule, CollapseModule, DatepickerModule,
   BsDropdownModule, ModalModule, PaginationModule,
   ProgressbarModule, PopoverModule, RatingModule,
-  TabsModule, TimepickerModule, TooltipModule,
+  TabsModule, TimepickerModule, TimespanpickerModule, TooltipModule,
   TypeaheadModule
 ];
 
@@ -115,7 +120,7 @@ const MODULES = [
     BsDropdownModule.forRoot(), ModalModule.forRoot(), PaginationModule.forRoot(),
     ProgressbarModule.forRoot(), PopoverModule.forRoot(),
     RatingModule.forRoot(),
-    TabsModule.forRoot(), TimepickerModule.forRoot(), TooltipModule.forRoot(),
+    TabsModule.forRoot(), TimepickerModule.forRoot(), TimespanpickerModule.forRoot(), TooltipModule.forRoot(),
     TypeaheadModule.forRoot(), SortableModule.forRoot()
   ],
   exports: MODULES

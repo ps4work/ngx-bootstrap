@@ -1,4 +1,4 @@
-export interface Time {
+export interface Timespan {
   day?: string | number;
   hour?: string | number;
   minute?: string | number;
@@ -6,7 +6,7 @@ export interface Time {
   isPM?: boolean;
 }
 
-export interface TimepickerControls {
+export interface TimespanpickerControls {
   canIncrementDays: boolean;
   canIncrementHours: boolean;
   canIncrementMinutes: boolean;
@@ -18,7 +18,7 @@ export interface TimepickerControls {
   canDecrementSeconds: boolean;
 }
 
-export interface TimepickerComponentState {
+export interface TimespanpickerComponentState {
   min: Date;
   max: Date;
 
@@ -41,7 +41,7 @@ export interface TimepickerComponentState {
 
 export type TimeChangeSource = 'wheel' | 'key' | '';
 
-export interface TimeChangeEvent {
+export interface TimespanChangeEvent {
   step: number;
   source: TimeChangeSource;
 }

@@ -13,6 +13,7 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
 // import { SortableSectionComponent } from './components/+sortable/sortable-section.component';
 // import { TabsSectionComponent } from './components/+tabs/tabs-section.component';
 // import { TimepickerSectionComponent } from './components/+timepicker/timepicker-section.component';
+// import { TimespanpickerSectionComponent } from './components/+timespanpicker/timespanpicker-section.component';
 // import { TooltipSectionComponent } from './components/+tooltip/tooltip-section.component';
 // import { TypeaheadSectionComponent } from './components/+typeahead/typeahead-section.component';
 // import { PopoverSectionComponent } from './components/+popover/popover-section.component';
@@ -112,6 +113,12 @@ export const routes = [
     data: ['Timepicker'],
     // component: TimepickerSectionComponent
     loadChildren: './components/+timepicker/demo-timepicker.module#DemoTimepickerModule'
+  },
+  {
+    path: 'timespanpicker',
+    data: ['Timespanpicker'],
+    // component: TimespanpickerSectionComponent
+    loadChildren: './components/+timespanpicker/demo-timespanpicker.module#DemoTimespanpickerModule'
   },
   {
     path: 'tooltip',

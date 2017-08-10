@@ -2000,6 +2000,201 @@ export const ngdoc: any = {
     "methods": [],
     "properties": []
   },
+  "TimespanpickerActions": {
+    "fileName": "src/timespanpicker/reducer/timespanpicker.actions.ts",
+    "className": "TimespanpickerActions",
+    "description": "",
+    "methods": [],
+    "properties": []
+  },
+  "TimespanpickerStore": {
+    "fileName": "src/timespanpicker/reducer/timespanpicker.store.ts",
+    "className": "TimespanpickerStore",
+    "description": "",
+    "methods": [],
+    "properties": []
+  },
+  "TimespanpickerComponent": {
+    "fileName": "src/timespanpicker/timespanpicker.component.ts",
+    "className": "TimespanpickerComponent",
+    "description": "",
+    "selector": "timespanpicker",
+    "inputs": [
+      {
+        "name": "arrowkeys",
+        "type": "boolean",
+        "description": "<p>if true up/down arrowkeys inside hours and minutes inputs will change time </p>\n"
+      },
+      {
+        "name": "hourStep",
+        "type": "number",
+        "description": "<p>hours change step </p>\n"
+      },
+      {
+        "name": "max",
+        "type": "Date",
+        "description": "<p>maximum time user can select </p>\n"
+      },
+      {
+        "name": "meridians",
+        "type": "string[]",
+        "description": "<p>meridian labels based on locale </p>\n"
+      },
+      {
+        "name": "min",
+        "type": "Date",
+        "description": "<p>minimum time user can select </p>\n"
+      },
+      {
+        "name": "minuteStep",
+        "type": "number",
+        "description": "<p>hours change step </p>\n"
+      },
+      {
+        "name": "mousewheel",
+        "type": "boolean",
+        "description": "<p>if true scroll inside hours and minutes inputs will change time </p>\n"
+      },
+      {
+        "name": "readonlyInput",
+        "type": "boolean",
+        "description": "<p>if true hours and minutes fields will be readonly </p>\n"
+      },
+      {
+        "name": "secondsStep",
+        "type": "number",
+        "description": "<p>seconds change step </p>\n"
+      },
+      {
+        "name": "showMeridian",
+        "type": "boolean",
+        "description": ""
+      },
+      {
+        "name": "showSeconds",
+        "type": "boolean",
+        "description": ""
+      },
+      {
+        "name": "showSpinners",
+        "type": "boolean",
+        "description": "<p>if true spinner arrows above and below the inputs will be shown </p>\n"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "isValid",
+        "description": "<p>emits true if value is a valid date </p>\n"
+      }
+    ],
+    "properties": [],
+    "methods": []
+  },
+  "TimespanpickerConfig": {
+    "fileName": "src/timespanpicker/timespanpicker.config.ts",
+    "className": "TimespanpickerConfig",
+    "description": "<p>Provides default configuration values for timespanpicker </p>\n",
+    "methods": [],
+    "properties": [
+      {
+        "name": "arrowkeys",
+        "defaultValue": "true",
+        "type": "boolean",
+        "description": "<p>if true up/down arrowkeys inside hours and minutes inputs will change time </p>\n"
+      },
+      {
+        "name": "hourStep",
+        "defaultValue": "1",
+        "type": "number",
+        "description": "<p>hours change step </p>\n"
+      },
+      {
+        "name": "max",
+        "type": "Date",
+        "description": "<p>maximum time user can select </p>\n"
+      },
+      {
+        "name": "meridians",
+        "type": "string[]",
+        "description": "<p>meridian labels based on locale </p>\n"
+      },
+      {
+        "name": "min",
+        "type": "Date",
+        "description": "<p>minimum time user can select </p>\n"
+      },
+      {
+        "name": "minuteStep",
+        "defaultValue": "5",
+        "type": "number",
+        "description": "<p>hours change step </p>\n"
+      },
+      {
+        "name": "mousewheel",
+        "defaultValue": "true",
+        "type": "boolean",
+        "description": "<p>if true scroll inside hours and minutes inputs will change time </p>\n"
+      },
+      {
+        "name": "readonlyInput",
+        "defaultValue": "false",
+        "type": "boolean",
+        "description": "<p>if true hours and minutes fields will be readonly </p>\n"
+      },
+      {
+        "name": "secondsStep",
+        "defaultValue": "10",
+        "type": "number",
+        "description": "<p>seconds changes step </p>\n"
+      },
+      {
+        "name": "showMeridian",
+        "defaultValue": "true",
+        "type": "boolean",
+        "description": "<p>if true works in 12H mode and displays AM/PM. If false works in 24H mode and hides AM/PM </p>\n"
+      },
+      {
+        "name": "showSeconds",
+        "defaultValue": "false",
+        "type": "boolean",
+        "description": "<p>show seconds in timepicker </p>\n"
+      },
+      {
+        "name": "showSpinners",
+        "defaultValue": "true",
+        "type": "boolean",
+        "description": "<p>if true spinner arrows above and below the inputs will be shown </p>\n"
+      }
+    ]
+  },
+  "Timespan": {
+    "fileName": "src/timespanpicker/timespanpicker.models.ts",
+    "className": "Timespan",
+    "description": "",
+    "methods": [],
+    "properties": []
+  },
+  "TimespanpickerControls": {
+    "fileName": "src/timespanpicker/timespanpicker.models.ts",
+    "className": "TimespanpickerControls",
+    "description": "",
+    "methods": [],
+    "properties": []
+  },
+  "TimespanpickerComponentState": {
+    "fileName": "src/timespanpicker/timespanpicker.models.ts",
+    "className": "TimespanpickerComponentState",
+    "description": "",
+    "methods": [],
+    "properties": []
+  },
+  "TimespanChangeEvent": {
+    "fileName": "src/timespanpicker/timespanpicker.models.ts",
+    "className": "TimespanChangeEvent",
+    "description": "",
+    "methods": [],
+    "properties": []
+  },
   "TooltipContainerComponent": {
     "fileName": "src/tooltip/tooltip-container.component.ts",
     "className": "TooltipContainerComponent",

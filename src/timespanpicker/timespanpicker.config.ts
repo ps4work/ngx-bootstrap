@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-/** Provides default configuration values for timepicker */
+/** Provides default configuration values for timespanpicker */
 @Injectable()
-export class TimepickerConfig {
+export class TimespanpickerConfig {
   /** hours change step */
   dayStep = 1;
   /** hours change step */
@@ -23,7 +23,7 @@ export class TimepickerConfig {
   arrowkeys = true;
   /** if true spinner arrows above and below the inputs will be shown */
   showSpinners = true;
-  /** show seconds in timepicker */
+  /** show seconds in timespanpicker */
   showSeconds = false;
   /** minimum time user can select */
   min: Date;

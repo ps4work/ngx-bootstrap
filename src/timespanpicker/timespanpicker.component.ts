@@ -10,24 +10,24 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { TimepickerActions } from './reducer/timepicker.actions';
-import { TimepickerStore } from './reducer/timepicker.store';
-import { getControlsValue } from './timepicker-controls.util';
-import { TimepickerConfig } from './timepicker.config';
-import { TimeChangeSource, TimepickerComponentState, TimepickerControls } from './timepicker.models';
-import { isValidDate, padNumber, parseTime, isInputValid } from './timepicker.utils';
+import { TimespanpickerActions } from './reducer/timespanpicker.actions';
+import { TimespanpickerStore } from './reducer/timespanpicker.store';
+import { getControlsValue } from './timespanpicker-controls.util';
+import { TimespanpickerConfig } from './timespanpicker.config';
+import { TimeChangeSource, TimespanpickerComponentState, TimespanpickerControls } from './timespanpicker.models';
+import { isValidDate, padNumber, parseTime, isInputValid } from './timespanpicker.utils';
 
-export const TIMEPICKER_CONTROL_VALUE_ACCESSOR: any = {
+export const TIMESPANPICKER_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   // tslint:disable-next-line
-  useExisting: forwardRef(() => TimepickerComponent),
+  useExisting: forwardRef(() => TimespanpickerComponent),
   multi: true
 };
 
 @Component({
-  selector: 'timepicker',
+  selector: 'timespanpicker',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TIMEPICKER_CONTROL_VALUE_ACCESSOR, TimepickerStore],
+  providers: [TIMESPANPICKER_CONTROL_VALUE_ACCESSOR, TimespanpickerStore],
   template: `
     <table>
       <tbody>
@@ -66,10 +66,6 @@ export const TIMEPICKER_CONTROL_VALUE_ACCESSOR: any = {
             <span class="glyphicon glyphicon-chevron-up"></span>
           </a>
         </td>
-        <!-- space between -->
-        <td>&nbsp;&nbsp;&nbsp;</td>
-        <!-- meridian placeholder-->
-        <td *ngIf="showMeridian"></td>
       </tr>
       <tr>
         <!-- days -->
@@ -128,17 +124,6 @@ export const TIMEPICKER_CONTROL_VALUE_ACCESSOR: any = {
                  (keydown.ArrowDown)="changeSeconds(-secondsStep, 'key')"
                  (change)="updateSeconds($event.target.value)">
         </td>
-        <!-- space between -->
-        <td>&nbsp;&nbsp;&nbsp;</td>
-        <!-- meridian -->
-        <td *ngIf="showMeridian">
-          <button type="button" class="btn btn-default text-center"
-                  [disabled]="readonlyInput"
-                  [class.disabled]="readonlyInput"
-                  (click)="toggleMeridian()">
-            {{meridian}}
-          </button>
-        </td>
       </tr>
       <tr class="text-center" [class.hidden]="!isSpinnersVisible">
         <!-- decrement days button-->
@@ -171,16 +156,12 @@ export const TIMEPICKER_CONTROL_VALUE_ACCESSOR: any = {
             <span class="glyphicon glyphicon-chevron-down"></span>
           </a>
         </td>
-        <!-- space between -->
-        <td>&nbsp;&nbsp;&nbsp;</td>
-        <!-- meridian placeholder-->
-        <td *ngIf="showMeridian"></td>
       </tr>
       </tbody>
     </table>
   `
 })
-export class TimepickerComponent implements ControlValueAccessor, TimepickerComponentState, TimepickerControls, OnChanges {
+export class TimespanpickerComponent implements ControlValueAccessor, TimespanpickerComponentState, TimespanpickerControls, OnChanges {
   /** days change step */
   @Input() dayStep: number;
   /** hours change step */
@@ -243,10 +224,10 @@ export class TimepickerComponent implements ControlValueAccessor, TimepickerComp
   onChange: any = Function.prototype;
   onTouched: any = Function.prototype;
 
-  constructor(_config: TimepickerConfig,
+  constructor(_config: TimespanpickerConfig,
               private _cd: ChangeDetectorRef,
-              private _store: TimepickerStore,
-              private _timepickerActions: TimepickerActions) {
+              private _store: TimespanpickerStore,
+              private _timespanpickerActions: TimespanpickerActions) {
     Object.assign(this, _config);
     // todo: add unsubscribe
     _store
@@ -256,14 +237,14 @@ export class TimepickerComponent implements ControlValueAccessor, TimepickerComp
         this._renderTime(value);
         this.onChange(value);
 
-        this._store.dispatch(this._timepickerActions.updateControls(getControlsValue(this)));
+        this._store.dispatch(this._timespanpickerActions.updateControls(getControlsValue(this)));
       });
     _store
       .select((state) => state.day)
       .subscribe((value) => {
         this._renderDays(value);
 
-        this._store.dispatch(this._timepickerActions.updateControls(getControlsValue(this)));
+        this._store.dispatch(this._timespanpickerActions.updateControls(getControlsValue(this)));
       });
 
     _store
@@ -288,25 +269,25 @@ export class TimepickerComponent implements ControlValueAccessor, TimepickerComp
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this._store.dispatch(this._timepickerActions.updateControls(getControlsValue(this)));
+    this._store.dispatch(this._timespanpickerActions.updateControls(getControlsValue(this)));
   }
 
   changeDays(step: number, source: TimeChangeSource = ''): void {
     console.log('changeDays');
-    this._store.dispatch(this._timepickerActions.changeDays({step, source}));
+    this._store.dispatch(this._timespanpickerActions.changeDays({step, source}));
   }
 
   changeHours(step: number, source: TimeChangeSource = ''): void {
     console.log('changeHours');
-    this._store.dispatch(this._timepickerActions.changeHours({step, source}));
+    this._store.dispatch(this._timespanpickerActions.changeHours({step, source}));
   }
 
   changeMinutes(step: number, source: TimeChangeSource = ''): void {
-    this._store.dispatch(this._timepickerActions.changeMinutes({step, source}));
+    this._store.dispatch(this._timespanpickerActions.changeMinutes({step, source}));
   }
 
   changeSeconds(step: number, source: TimeChangeSource = ''): void {
-    this._store.dispatch(this._timepickerActions.changeSeconds({step, source}));
+    this._store.dispatch(this._timespanpickerActions.changeSeconds({step, source}));
   }
 
   updateDays(days: string): void {
@@ -336,23 +317,13 @@ export class TimepickerComponent implements ControlValueAccessor, TimepickerComp
       this.onChange(null);
       return;
     }
-    this._store.dispatch(this._timepickerActions
+    this._store.dispatch(this._timespanpickerActions
       .setTime({
         day: this.days,
         hour: this.hours,
         minute: this.minutes,
-        seconds: this.seconds,
-        isPM: this.isPM()
+        seconds: this.seconds
       }));
-  }
-
-  toggleMeridian(): void {
-    if (!this.showMeridian || this.readonlyInput) {
-      return;
-    }
-
-    const _hoursPerDayHalf = 12;
-    this._store.dispatch(this._timepickerActions.changeHours({step: _hoursPerDayHalf, source: ''}));
   }
 
   /**
@@ -360,7 +331,7 @@ export class TimepickerComponent implements ControlValueAccessor, TimepickerComp
    */
   writeValue(obj: any): void {
     if (isValidDate(obj)) {
-      this._store.dispatch(this._timepickerActions.writeValue(parseTime(obj)));
+      this._store.dispatch(this._timespanpickerActions.writeValue(parseTime(obj)));
     }
   }
 

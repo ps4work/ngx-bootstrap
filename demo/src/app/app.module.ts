@@ -26,6 +26,7 @@ import { AppFooterComponent } from './common/app-footer/app-footer.component';
 // import { DemoSortableModule } from './components/+sortable';
 // import { DemoTabsModule } from './components/+tabs';
 // import { DemoTimepickerModule } from './components/+timepicker/index';
+// import { DemoTimespanpickerModule } from './components/+timespanpicker/index';
 // import { DemoTooltipModule } from './components/+tooltip/index';
 // import { DemoTypeaheadModule } from './components/+typeahead/index';
 import { NgApiDocModule } from './api-docs/index';
@@ -63,6 +64,7 @@ import { ngdoc } from '../ng-api-doc';
     // DemoSortableModule,
     // DemoTabsModule,
     // DemoTimepickerModule,
+    // DemoTimespanpickerModule,
     // DemoTooltipModule,
     // DemoTypeaheadModule
   ],

@@ -5,6 +5,7 @@ import { TimeChangeEvent, TimepickerComponentState, Time } from '../timepicker.m
 @Injectable()
 export class TimepickerActions {
   static readonly WRITE_VALUE = '[timepicker] write value from ng model';
+  static readonly CHANGE_DAYS = '[timepicker] change days';
   static readonly CHANGE_HOURS = '[timepicker] change hours';
   static readonly CHANGE_MINUTES = '[timepicker] change minutes';
   static readonly CHANGE_SECONDS = '[timepicker] change seconds';
@@ -15,6 +16,13 @@ export class TimepickerActions {
     return {
       type: TimepickerActions.WRITE_VALUE,
       payload: value
+    };
+  }
+
+  changeDays(event: TimeChangeEvent) {
+    return {
+      type: TimepickerActions.CHANGE_DAYS,
+      payload: event
     };
   }
 

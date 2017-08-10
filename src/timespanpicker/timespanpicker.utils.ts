@@ -1,4 +1,4 @@
-import { Time } from './timepicker.models';
+import { Timespan } from './timespanpicker.models';
 
 const dex = 10;
 const hoursPerDay = 24;
@@ -78,7 +78,7 @@ export function parseTime(value: string | Date): Date {
   return value;
 }
 
-export function changeTime(value: Date, diff: Time): Date {
+export function changeTime(value: Date, diff: Timespan): Date {
   if (!value) {
     return changeTime(createDate(new Date(),0,0, 0), diff);
   }
@@ -105,7 +105,7 @@ export function changeTime(value: Date, diff: Time): Date {
   return createDate(value, hour, minutes, seconds);
 }
 
-export function setTime(value: Date, opts: Time): Date {
+export function setTime(value: Date, opts: Timespan): Date {
   let hour = parseHours(opts.hour);
   const minute = parseMinutes(opts.minute);
   const seconds = parseSeconds(opts.seconds) || 0;
