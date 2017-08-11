@@ -78,6 +78,9 @@ export function canChangeSeconds(event: TimespanChangeEvent, controls: Timespanp
 
   return true;
 }
+export function canWriteValue(value: Timespan): boolean {
+  return 'days' in value || 'hours' in value || 'minutes' in value || 'seconds' in value;
+}
 
 export function getControlsValue(state: TimespanpickerComponentState): TimespanpickerComponentState {
   const {

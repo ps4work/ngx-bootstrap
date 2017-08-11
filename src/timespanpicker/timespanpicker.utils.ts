@@ -83,19 +83,22 @@ export function changeTime(value: Timespan, diff: Timespan): Timespan {
     return changeTime({days: 0, hours: 0, minutes: 0, seconds: 0}, diff);
   }
 
-  let day = toNumber(value.days);
-  let hour = toNumber(value.hours);
+  let days = toNumber(value.days);
+  let hours = toNumber(value.hours);
   let minutes = toNumber(value.minutes);
   let seconds = toNumber(value.seconds);
 
   if (diff.days) {
-    day = (day + toNumber(diff.days));
+    days = (days + toNumber(diff.days));
+    if (days < 0) {
+      days = 0;
+    }
   }
 
   if (diff.hours) {
-    hour = (hour + toNumber(diff.hours));
-    if (hour < 0) {
-      hour = 0;
+    hours = (hours + toNumber(diff.hours));
+    if (hours < 0) {
+      hours = 0;
     }
   }
 
@@ -113,7 +116,7 @@ export function changeTime(value: Timespan, diff: Timespan): Timespan {
     }
   }
 
-  return {days: day, hours: hour, minutes: minutes, seconds: seconds};
+  return {days: days, hours: hours, minutes: minutes, seconds: seconds};
 }
 
 export function padNumber(value: number): string {
@@ -122,13 +125,6 @@ export function padNumber(value: number): string {
 
   return `0${_value}`;
 }
-
-// export function isInputValid(hours: string, minutes: string, seconds: string = '0', isPM: boolean): boolean {
-//   if (isNaN(parseHours(hours, isPM)) || isNaN(parseMinutes(minutes)) || isNaN(parseSeconds(seconds))) {
-//     return false;
-//   }
-//   return true;
-// }
 
 export function isInputValid(days: string, hours: string, minutes: string, seconds: string = '0', isPM: boolean): boolean {
   if (isNaN(parseDays(days)) || isNaN(parseHours(hours, isPM)) || isNaN(parseMinutes(minutes)) || isNaN(parseSeconds(seconds))) {

@@ -5,6 +5,7 @@ import {
   canChangeMinutes,
   canChangeSeconds,
   canChangeValue,
+  canWriteValue,
   timespanpickerControls,
   canChangeDays
 } from '../timespanpicker-controls.util';
@@ -44,22 +45,19 @@ export function timespanpickerReducer(state = initialState, action: Action) {
   console.log('timespanpickerReducer');
   console.log(action);
   switch (action.type) {
-    // case (TimespanpickerActions.WRITE_VALUE): {
-    //   return Object.assign({}, state, { value: action.payload });
-    // }
+    case (TimespanpickerActions.WRITE_VALUE): {
+      if (!canWriteValue(action.payload)) {
+        return state;
+      }
+      return Object.assign({}, state, { value: action.payload });
+    }
 
     case (TimespanpickerActions.CHANGE_DAYS): {
-      console.log('TimespanpickerActions.CHANGE_DAYS');
-      console.log(state);
-      console.log(action);
       if (!canChangeValue(state.config, action.payload) ||
         !canChangeDays(action.payload, state.controls)) {
         return state;
       }
 
-      console.log('TimespanpickerActions.CHANGE_DAYS start');
-      // console.log(toNumber(state.value.day) + toNumber(action.payload.step));
-      // return Object.assign({}, state, { day: toNumber(state.day) + toNumber(action.payload.step) });
       const _newTime = changeTime(state.value, { days: action.payload.step });
 
       return Object.assign({}, state, { value: _newTime });
@@ -108,8 +106,6 @@ export function timespanpickerReducer(state = initialState, action: Action) {
     }
 
     case (TimespanpickerActions.UPDATE_CONTROLS): {
-      console.log('TimespanpickerActions.UPDATE_CONTROLS');
-      console.log(state);
       const _newControlsState = timespanpickerControls(state.value, action.payload);
 
       return Object.assign({}, state, {
