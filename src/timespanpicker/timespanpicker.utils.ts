@@ -23,6 +23,9 @@ export function isValidDate(value?: string | Date): boolean {
 }
 
 export function toNumber(value: string | number): number {
+  if (!value) {
+    return 0;
+  }
   if (typeof value === 'number') {
     return value;
   }
@@ -37,16 +40,16 @@ export function isNumber(value: string): boolean {
 export function parseDays(value: string | number): number {
   const day = toNumber(value);
   if (isNaN(day) || day < 0) {
-    return NaN;
+    return 0;
   }
 
   return day;
 }
 
-export function parseHours(value: string | number, isPM: boolean = false): number {
+export function parseHours(value: string | number): number {
   const hour = toNumber(value);
-  if (isNaN(hour) || hour < 0 || hour > (isPM ? hoursPerDayHalf : hoursPerDay)) {
-    return NaN;
+  if (isNaN(hour) || hour < 0) {
+    return 0;
   }
 
   return hour;
@@ -54,8 +57,8 @@ export function parseHours(value: string | number, isPM: boolean = false): numbe
 
 export function parseMinutes(value: string | number): number {
   const minute = toNumber(value);
-  if (isNaN(minute) || minute < 0 || minute > minutesPerHour) {
-    return NaN;
+  if (isNaN(minute) || minute < 0) {
+    return 0;
   }
 
   return minute;
@@ -63,8 +66,8 @@ export function parseMinutes(value: string | number): number {
 
 export function parseSeconds(value: string | number): number {
   const seconds = toNumber(value);
-  if (isNaN(seconds) || seconds < 0 || seconds > secondsPerMinute) {
-    return NaN;
+  if (isNaN(seconds) || seconds < 0) {
+    return 0;
   }
 
   return seconds;
@@ -118,16 +121,22 @@ export function changeTime(value: Timespan, diff: Timespan): Timespan {
 
   return {days: days, hours: hours, minutes: minutes, seconds: seconds};
 }
-
-export function padNumber(value: number): string {
+export function allToString(value: Object): string {
+  if (value) {
+    return value.toString();
+  } else {
+    return null;
+  }
+}
+export function padNumber(value: number | string): string {
   const _value = value.toString();
   if (_value.length > 1) { return _value; }
 
   return `0${_value}`;
 }
 
-export function isInputValid(days: string, hours: string, minutes: string, seconds: string = '0', isPM: boolean): boolean {
-  if (isNaN(parseDays(days)) || isNaN(parseHours(hours, isPM)) || isNaN(parseMinutes(minutes)) || isNaN(parseSeconds(seconds))) {
+export function isInputValid(days: string, hours: string, minutes: string, seconds: string = '0'): boolean {
+  if (isNaN(parseDays(days)) || isNaN(parseHours(hours)) || isNaN(parseMinutes(minutes)) || isNaN(parseSeconds(seconds))) {
     return false;
   }
   return true;

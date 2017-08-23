@@ -15,7 +15,7 @@ import { TimespanpickerStore } from './reducer/timespanpicker.store';
 import { getControlsValue } from './timespanpicker-controls.util';
 import { TimespanpickerConfig } from './timespanpicker.config';
 import { TimeChangeSource, TimespanpickerComponentState, TimespanpickerControls, Timespan } from './timespanpicker.models';
-import { isValidDate, padNumber, parseTime, isInputValid } from './timespanpicker.utils';
+import { isValidDate, padNumber, parseTime, isInputValid, allToString, parseSeconds, parseMinutes, parseHours, parseDays } from './timespanpicker.utils';
 
 export const TIMESPANPICKER_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -71,9 +71,9 @@ export const TIMESPANPICKER_CONTROL_VALUE_ACCESSOR: any = {
         <!-- days -->
         <td class="form-group" [class.has-error]="invalidDays">
           <input type="text" style="width:50px;"
+                 data-toggle="tooltip" title="дни"
                  class="form-control text-center"
-                 placeholder="DD"
-                 maxlength="2"
+                 placeholder="дни"
                  [readonly]="readonlyInput"
                  [value]="days"
                  (wheel)="prevDef($event);changeDays(dayStep * wheelSign($event), 'wheel')"
@@ -85,9 +85,9 @@ export const TIMESPANPICKER_CONTROL_VALUE_ACCESSOR: any = {
         <!-- hours -->
         <td class="form-group" [class.has-error]="invalidHours">
           <input type="text" style="width:50px;"
+                 data-toggle="tooltip" title="часы"
                  class="form-control text-center"
-                 placeholder="HH"
-                 maxlength="2"
+                 placeholder="час"
                  [readonly]="readonlyInput"
                  [value]="hours"
                  (wheel)="prevDef($event);changeHours(hourStep * wheelSign($event), 'wheel')"
@@ -99,9 +99,9 @@ export const TIMESPANPICKER_CONTROL_VALUE_ACCESSOR: any = {
         <!-- minutes -->
         <td class="form-group" [class.has-error]="invalidMinutes">
           <input style="width:50px;" type="text"
+                 data-toggle="tooltip" title="минуты"
                  class="form-control text-center"
-                 placeholder="MM"
-                 maxlength="2"
+                 placeholder="мин"
                  [readonly]="readonlyInput"
                  [value]="minutes"
                  (wheel)="prevDef($event);changeMinutes(minuteStep * wheelSign($event), 'wheel')"
@@ -114,9 +114,9 @@ export const TIMESPANPICKER_CONTROL_VALUE_ACCESSOR: any = {
         <!-- seconds -->
         <td class="form-group" *ngIf="showSeconds" [class.has-error]="invalidSeconds">
           <input style="width:50px;" type="text"
+                 data-toggle="tooltip" title="секунды"          
                  class="form-control text-center"
-                 placeholder="SS"
-                 maxlength="2"
+                 placeholder="сек"
                  [readonly]="readonlyInput"
                  [value]="seconds"
                  (wheel)="prevDef($event);changeSeconds(secondsStep * wheelSign($event), 'wheel')"
@@ -193,7 +193,7 @@ export class TimespanpickerComponent implements ControlValueAccessor, Timespanpi
   @Output() isValid: EventEmitter<boolean> = new EventEmitter();
 
   // ui variables
-  days: string = '0';
+  days: string;
   hours: string;
   minutes: string;
   seconds: string;
@@ -242,7 +242,7 @@ export class TimespanpickerComponent implements ControlValueAccessor, Timespanpi
     _store
       .select((state) => state.controls)
       .subscribe((controlsState) => {
-        this.isValid.emit(isInputValid(this.days, this.hours, this.minutes, this.seconds, this.isPM()));
+        this.isValid.emit(isInputValid(this.days, this.hours, this.minutes, this.seconds));
         Object.assign(this, controlsState);
         _cd.markForCheck();
       });
@@ -251,8 +251,7 @@ export class TimespanpickerComponent implements ControlValueAccessor, Timespanpi
   isPM(): boolean {
     return this.showMeridian && this.meridian === this.meridians[1];
   }
-
-  prevDef($event: any) {
+prevDef($event: any) {
     $event.preventDefault();
   }
 
@@ -305,16 +304,16 @@ export class TimespanpickerComponent implements ControlValueAccessor, Timespanpi
   }
 
   _updateTime() {
-    if (!isInputValid(this.days, this.hours, this.minutes, this.seconds, this.isPM())) {
+    if (!isInputValid(this.days, this.hours, this.minutes, this.seconds)) {
       this.onChange(null);
       return;
     }
     this._store.dispatch(this._timespanpickerActions
       .setTime({
-        days: this.days,
-        hours: this.hours,
-        minutes: this.minutes,
-        seconds: this.seconds
+        days: parseDays(this.days),
+        hours: parseHours(this.hours),
+        minutes: parseMinutes(this.minutes),
+        seconds: parseSeconds(this.seconds)
       }));
   }
 
@@ -358,9 +357,9 @@ export class TimespanpickerComponent implements ControlValueAccessor, Timespanpi
   private _renderTime(value: Timespan): void {
     console.log('renderTime');
     console.log(value);
-    this.days = value.days.toString();
-    this.hours = padNumber(+value.hours);
-    this.minutes = padNumber(+value.minutes);
-    this.seconds = padNumber(+value.seconds);
+    this.days = allToString(value.days);
+    this.hours = allToString(value.hours);
+    this.minutes = allToString(value.minutes);
+    this.seconds = allToString(value.seconds);
   }
 }
